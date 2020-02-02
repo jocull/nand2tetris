@@ -13,5 +13,7 @@ CHIP Inc16 {
     OUT out[16];
 
     PARTS:
-   // Put you code here:
+    // Couldn't figure out the syntax here at first,
+    // but found http://people.duke.edu/~nts9/logicgates/ in the process
+    Add16(a=in,b[0]=true,out=out);
 }
