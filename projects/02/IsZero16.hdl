@@ -1,0 +1,10 @@
+// Supplemental gate for ALU
+// Determines if an input 16-bit integer is zero
+CHIP IsZero16 {
+    IN in[16]; // 16-bit signed integer
+    OUT out; // 1 if zero, 0 otherwise
+
+    PARTS:
+    Or16Way(in=in, out=rz);
+    Not(in=rz, out=out);
+}

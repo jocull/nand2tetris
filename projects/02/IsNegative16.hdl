@@ -1,0 +1,9 @@
+// Supplemental gate for ALU
+// Determines if an input 16-bit integer is negative
+CHIP IsNegative16 {
+    IN in[16]; // 16-bit signed integer
+    OUT out; // 1 if negative, 0 otherwise
+
+    PARTS:
+    And(a=in[15], b=true, out=out);
+}
