@@ -12,9 +12,19 @@
  */
 
 CHIP PC {
-    IN in[16],load,inc,reset;
+    IN in[16], load, inc, reset;
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    // The register to hold the counter in.
+    // Always accepts a new load (even if it is a feedback load).
+    Register(in=mResult, load=true, out=regOut, out=out);
+
+    // The result of the next increment
+    Inc16(in=regOut, out=nextInc);
+
+    // Choose whether to inc, load, or reset
+    Mux16(a=regOut, b=nextInc, sel=inc, out=m1);
+    Mux16(a=m1, b=in, sel=load, out=m2);
+    Mux16(a=m2, b=false, sel=reset, out=mResult);
 }
