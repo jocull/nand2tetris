@@ -1,0 +1,28 @@
+// A decoder for "C" CPU instructions.
+// Splits a 16-bit input instruction to pins according to their purpose.
+CHIP InstructionDecoder {
+    IN instruction[16];
+
+    OUT fetch,
+        compA,
+        compute[6],
+        dest[3],
+        jump[3];
+
+    PARTS:
+    And(a=instruction[15], b=true, out=fetch);
+    // instruction[13..14] are unused in C instructions
+    And(a=instruction[12], b=true, out=compA);
+    And(a=instruction[11], b=true, out=compute[5]);
+    And(a=instruction[10], b=true, out=compute[4]);
+    And(a=instruction[9], b=true, out=compute[3]);
+    And(a=instruction[8], b=true, out=compute[2]);
+    And(a=instruction[7], b=true, out=compute[1]);
+    And(a=instruction[6], b=true, out=compute[0]);
+    And(a=instruction[5], b=true, out=dest[2]);
+    And(a=instruction[4], b=true, out=dest[1]);
+    And(a=instruction[3], b=true, out=dest[0]);
+    And(a=instruction[2], b=true, out=jump[2]);
+    And(a=instruction[1], b=true, out=jump[1]);
+    And(a=instruction[0], b=true, out=jump[0]);
+}

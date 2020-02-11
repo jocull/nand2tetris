@@ -26,7 +26,6 @@
  */
 
 CHIP CPU {
-
     IN  inM[16],         // M value input  (M = contents of RAM[A])
         instruction[16], // Instruction for execution
         reset;           // Signals whether to re-start the current
@@ -39,5 +38,33 @@ CHIP CPU {
         pc[15];          // address of next instruction
 
     PARTS:
-    // Put your code here:
+    InstructionDecoder(instruction=instruction,
+                       fetch=iFetch,
+                       compA=compA,
+                       compute=compute,
+                       dest=dest,
+                       jump=jump);
+    
+    Not(in=iFetch, out=iLoad);
+    
+    InstructionAddress(instruction=instruction,
+                       address=aAddress)
+
+    // If this is an "A" instruction, fetch will be 0
+    // In that case, all we need to do is put the rest of the bits into Reg A
+
+    Register(in=aAddress, load=iLoad, out=regA, out=addressM); // A
+    Register(in=, load=, out=regD); // D
+    PC(in=, load=, inc=, reset=reset, out=);
+
+    Mux16(a=regA, b=inM, sel=compA, out=aOrM);
+
+    ALU(x=D, y=AM,
+        zx=compute[5],
+        nx=compute[4],
+        zy=compute[3],
+        ny=compute[2],
+        f=compute[1],
+        no=compute[0],
+        out=aluOut, out=outM, zr=zr, ng=ng);
 }

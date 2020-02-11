@@ -1,0 +1,25 @@
+// A decoder for "A" CPU instructions.
+// Pulls a 15-bit "A" instruction up into a 16-bit value.
+CHIP InstructionAddress {
+    IN instruction[16];
+
+    OUT address[16];
+
+    PARTS:
+    And(a=instruction[15], b=false, out=address[15]); // Note: dropped value
+    And(a=instruction[14], b=true, out=address[14]);
+    And(a=instruction[13], b=true, out=address[13]);
+    And(a=instruction[12], b=true, out=address[12]);
+    And(a=instruction[11], b=true, out=address[11]);
+    And(a=instruction[10], b=true, out=address[10]);
+    And(a=instruction[9], b=true, out=address[9]);
+    And(a=instruction[8], b=true, out=address[8]);
+    And(a=instruction[7], b=true, out=address[7]);
+    And(a=instruction[6], b=true, out=address[6]);
+    And(a=instruction[5], b=true, out=address[5]);
+    And(a=instruction[4], b=true, out=address[4]);
+    And(a=instruction[3], b=true, out=address[3]);
+    And(a=instruction[2], b=true, out=address[2]);
+    And(a=instruction[1], b=true, out=address[1]);
+    And(a=instruction[0], b=true, out=address[0]);
+}
